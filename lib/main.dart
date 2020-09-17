@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lifemap_v7/screens/confirmProfileScreen.dart';
 import 'package:lifemap_v7/screens/profileScreen.dart';
 
 void main() {
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.deepOrange,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: profileScreen(),
+      home: confirmProfile(),
     );
   }
 }

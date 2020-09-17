@@ -123,8 +123,8 @@ class _profileScreen extends State<profileScreen> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      // MaterialPageRoute(builder: (context) => homeScreen(passedFname: givenFname, passedLname: givenLname,)),
-                      MaterialPageRoute(builder: (context) => birthScreen()),
+                      // MaterialPageRoute(builder: (context) => homeScreen()),
+                      MaterialPageRoute(builder: (context) => birthScreen(passedFname: givenFname, passedLname: givenLname,)),
                     );
                   },
                   child: Text('Next'),

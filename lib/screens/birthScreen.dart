@@ -18,7 +18,7 @@ class birthScreen extends StatefulWidget {
 
 class _birthScreen extends State<birthScreen> {
 
-  String passedFname, passedLname, givenFname, givenLname, date;
+  String passedFname, passedLname, date;
   _birthScreen(this.passedFname, this.passedLname);
 
   final formKey = new GlobalKey<FormState>();
@@ -112,32 +112,25 @@ class _birthScreen extends State<birthScreen> {
           verticalDirection: VerticalDirection.down,
           children: <Widget>[
 
-        Row(children: <Widget>[
-             Expanded(
-               child: TextFormField(
-                decoration: InputDecoration(
-//                      icon: const Icon(Icons.calendar_today),
-                  hintText: 'Enter your date of birth',
-                  labelText: 'Date of Birth',
-                ),
-                controller: _controller,
-                keyboardType: TextInputType.datetime,
-
-                // validator: (val) => isValidDob(val) ? null : 'Not a valid date',
-
-                onChanged: (text) => date = text,
+            TextFormField(
+              keyboardType: TextInputType.datetime,
+              style: TextStyle(color: Colors.black54,
+                fontFamily: 'ArialMtBold',),
+              decoration: InputDecoration(
+                labelText: 'Date of Birth',
+                hintText: 'M/DD/YYYY',
+//                contentPadding: EdgeInsets.only(top: 20.0,),
+                hintStyle: kHintTextStyle,
               ),
-             ),
+
+              // validator: (val) => val.length ==  0 ? 'This field is required.' : null,
+              onChanged: (val) => date = val,
 
 
-              IconButton(
-                icon: Icon(Icons.more_horiz),
-                tooltip: 'Choose date',
-                onPressed: (() {
-                  _chooseDate(context, _controller.text);
-                }),
-              )
-            ]),
+            ),
+
+
+
 
             SizedBox(height: 7.0,),
 
@@ -151,7 +144,7 @@ class _birthScreen extends State<birthScreen> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => homeScreen(date: date,)),
+                      MaterialPageRoute(builder: (context) => homeScreen(fName: passedFname, lName: passedLname, date: date,)),
                     );
                   },
                   child: Text('Next'),

@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 
 class homeScreen extends StatefulWidget{
   // String passedFname, passedLname;
-  String date;
-  homeScreen({this.date});
+  String date, fName, lName;
+  homeScreen({this.fName, this.lName, this.date});
   // homeScreen({this.passedFname, this.passedLname});
 
   @override
-  _homeScreen createState() => _homeScreen(date);
+  _homeScreen createState() => _homeScreen(fName, lName, date);
 }
 
 class _homeScreen extends State<homeScreen>{
-  String date;
-  _homeScreen(this.date);
+  // String date;
+  // _homeScreen(this.date);
   // String passedFname, passedLname;
   // _homeScreen(this.passedFname, this.passedLname);
+  String date, fName, lName;
+  _homeScreen(this.fName, this.lName, this.date);
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +35,10 @@ class _homeScreen extends State<homeScreen>{
             child: Column(
               children: <Widget>[
                 SizedBox(
-                  height: 10.0,
+                  height: 50.0,
                 ),
+                Text(fName),
+                Text(lName),
                 Text(date,),
               ],
             ),
