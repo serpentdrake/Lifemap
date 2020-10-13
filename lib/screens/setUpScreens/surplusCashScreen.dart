@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lifemap_v7/constants.dart';
-import 'file:///C:/Users/serpe/Desktop/lifemap_v7/lib/screens/setUpScreens/assetsScreen.dart';
+import 'package:lifemap_v7/screens/setUpScreens/assetsScreen.dart';
+import 'package:lifemap_v7/screens/setUpScreens/surplusCashScreen.dart';
 import 'package:lifemap_v7/screens/homescreen.dart';
 import 'package:lifemap_v7/models/surplusCash.dart';
 import 'package:lifemap_v7/db/database_helper.dart';

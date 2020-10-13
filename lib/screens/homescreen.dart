@@ -1,7 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lifemap_v7/Time/tasks.dart';
 import 'package:lifemap_v7/constants.dart';
 import 'package:lifemap_v7/db/database_helper.dart';
 import 'package:lifemap_v7/models/strength.dart';
@@ -14,30 +13,20 @@ class homeScreen extends StatefulWidget {
 }
 
 class _homeScreen extends State<homeScreen> {
-
   Future<List<User>> user;
   List<PieChartSectionData> _sections = List<PieChartSectionData>();
-  List<PieChartSectionData> tasking = List<PieChartSectionData>();
 
   // String fName = user.fName;
   String _fName;
 
   final formKey = new GlobalKey<FormState>();
 
-
   var dbHelper, getUsers;
 
   void initState() {
     super.initState();
     dbHelper = DBHelper();
-    // getUsers = User(user);
-    // print();
-    // user = users;
-    // print(DBHelper().getUser());
 
-    //pie chart sample data
-
-   
 
     PieChartSectionData _item1 = PieChartSectionData(
         color: Colors.red,
@@ -111,15 +100,6 @@ class _homeScreen extends State<homeScreen> {
               scrollDirection: Axis.vertical,
               physics: ScrollPhysics(),
               children: <Widget>[
-                Container(
-                  margin: EdgeInsets.fromLTRB(300, 5, 0, 0),
-                  width: 5,
-                    child: FlatButton(
-                        onPressed: (){
-                        },
-                        child: Text('Edit')
-                    )
-                ),
                 SizedBox(height: 40,),
                 Text('Reminders',
                   style: TextStyle(

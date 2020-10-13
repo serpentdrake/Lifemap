@@ -27,6 +27,7 @@ class DBHelper {
 
   //Strength
   static const String STRID = 'strId';
+  static const String CORESTR = 'coreStr';
   static const String STRDESC = 'strDesc';
   static const String STRTABLE = 'Strength';
 
@@ -78,6 +79,7 @@ class DBHelper {
     await db.execute("""
          CREATE TABLE $STRTABLE(
           $STRID INTEGER PRIMARY KEY,
+         
           $STRDESC TEXT,
           $USERID INTEGER,
           FOREIGN KEY ($USERID)
@@ -166,7 +168,7 @@ class DBHelper {
   Future<List<Strength>> getStr() async {
     var dbClient = await db;
     List<Map> maps = await dbClient.query(STRTABLE,
-        columns: [STRID, STRDESC, USERID]);
+        columns: [STRID, CORESTR, STRDESC, USERID]);
     List<Strength> str = [];
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {

@@ -5,7 +5,7 @@ import 'package:lifemap_v7/db/database_helper.dart';
 import 'package:lifemap_v7/models/strength.dart';
 import 'dart:math' as math;
 
-import 'file:///C:/Users/serpe/Desktop/lifemap_v7/lib/screens/setUpScreens/weaknessScreen.dart';
+import 'package:lifemap_v7/screens/setUpScreens/weaknessScreen.dart';
 
 class strengthScreen extends StatefulWidget {
   @override
@@ -17,7 +17,7 @@ class _strengthScreen extends State<strengthScreen> {
   TextEditingController _controllerStr = TextEditingController();
 
   int userId, strUpdateId, ctr;
-  String strDesc;
+  String coreStr, strDesc;
   bool _setActive, _setActive2, isUpdate = false;
 
   final formKey = new GlobalKey<FormState>();
@@ -72,20 +72,7 @@ class _strengthScreen extends State<strengthScreen> {
                   Text('Enter 5 Strengths that you have.'),
                   SizedBox(height: 30.0,),
                   _listCash(),
-                  // SizedBox(height: 30.0,),
-                  // Visibility(
-                  //   visible: _setActive,
-                  //   child: Container(
-                  //     height: 150.0,
-                  //     child: Center(
-                  //       child: RaisedButton(
-                  //         elevation: 5.0,
-                  //         child: Text("Next"),
-                  //         onPressed: next,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
+
 
                 ],
               ),

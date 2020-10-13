@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lifemap_v7/constants.dart';
 import 'package:lifemap_v7/screens/homescreen.dart';
-
+import 'package:lifemap_v7/constants.dart';
 import 'dart:math' as math;
 
-import 'file:///C:/Users/serpe/Desktop/lifemap_v7/lib/screens/setUpScreens/surplusCashScreen.dart';
+import 'package:lifemap_v7/screens/setUpScreens/surplusCashScreen.dart';
 
 class monthlyExpensesScreen extends StatefulWidget {
   @override
