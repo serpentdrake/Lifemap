@@ -1,28 +1,26 @@
 class User{
-  int id;
-  int retireAge;
-  String fName;
-  String lName;
-  String date;
+  int userId, age, retireAge;
+  String fName, lName, birthDate;
 
-  User(this.id, this.fName, this.lName, this.date, this.retireAge);
+
+  User(this.userId, this.fName, this.lName, this.age, this.retireAge);
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic> {
-      'id': id,
+      'userId': userId,
       'fName': fName,
       'lName': lName,
-      'date': date,
+      'age': age,
       'retireAge': retireAge
     };
     return map;
   }
 
   User.fromMap (Map<String, dynamic> map) {
-    id = map['id'];
-    fName = map['fname'];
+    userId = map['userId'];
+    fName = map['fName'];
     lName = map['lName'];
-    date = map['date'];
+    age = map['age'];
     retireAge = map['retireAge'];
   }
 
