@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lifemap_v7/Time/tasks.dart';
 import 'package:lifemap_v7/constants.dart';
 import 'package:lifemap_v7/db/database_helper.dart';
 import 'package:lifemap_v7/models/strength.dart';
@@ -13,13 +14,16 @@ class homeScreen extends StatefulWidget {
 }
 
 class _homeScreen extends State<homeScreen> {
+
   Future<List<User>> user;
   List<PieChartSectionData> _sections = List<PieChartSectionData>();
+  List<PieChartSectionData> tasking = List<PieChartSectionData>();
 
   // String fName = user.fName;
   String _fName;
 
   final formKey = new GlobalKey<FormState>();
+
 
   var dbHelper, getUsers;
 
@@ -32,6 +36,8 @@ class _homeScreen extends State<homeScreen> {
     // print(DBHelper().getUser());
 
     //pie chart sample data
+
+   
 
     PieChartSectionData _item1 = PieChartSectionData(
         color: Colors.red,
@@ -105,6 +111,15 @@ class _homeScreen extends State<homeScreen> {
               scrollDirection: Axis.vertical,
               physics: ScrollPhysics(),
               children: <Widget>[
+                Container(
+                  margin: EdgeInsets.fromLTRB(300, 5, 0, 0),
+                  width: 5,
+                    child: FlatButton(
+                        onPressed: (){
+                        },
+                        child: Text('Edit')
+                    )
+                ),
                 SizedBox(height: 40,),
                 Text('Reminders',
                   style: TextStyle(
@@ -122,11 +137,14 @@ class _homeScreen extends State<homeScreen> {
                       width: 0.5
                     )
                   ),
-                  child: Column(
-                    children: <Widget>[
-                      // RaisedButton(onPressed: print(getUsers.fName),),
+                  child: GestureDetector(
+                    onTap: (){},
+                    child: Column(
+                      children: <Widget>[
+                        // RaisedButton(onPressed: print(getUsers.fName),),
 
-                    ],
+                      ],
+                    ),
                   ),
                 ),// Time/schedule
                 SizedBox(height: 20.0,),
@@ -140,28 +158,37 @@ class _homeScreen extends State<homeScreen> {
                    )
                  ),
                  child: Center(
-                   child: DataTable(
-                     columns: [
-                       DataColumn(
-                         label: Text(
-                           'Strength',
-                           style: TextStyle(
-                               fontSize: 15,
-                               fontWeight: FontWeight.w400,
-                               color: Colors.black),
+                   child: GestureDetector(
+                     onTap: (){},
+                     child: DataTable(
+                       columns: [
+                         DataColumn(
+                           label: GestureDetector(
+                             onTap: (){},
+                             child: Text(
+                               'Strength',
+                               style: TextStyle(
+                                   fontSize: 15,
+                                   fontWeight: FontWeight.w400,
+                                   color: Colors.black),
+                             ),
+                           ),
                          ),
-                       ),
-                       DataColumn(
-                         label: Text('Weakness',
-                             style: TextStyle(
-                                 fontSize: 15,
-                                 fontWeight: FontWeight.w400,
-                                 color: Colors.black),
-                           textAlign: TextAlign.right,
+                         DataColumn(
+                           label: GestureDetector(
+                             onTap: (){},
+                             child: Text('Weakness',
+                                 style: TextStyle(
+                                     fontSize: 15,
+                                     fontWeight: FontWeight.w400,
+                                     color: Colors.black),
+                               textAlign: TextAlign.right,
+                             ),
+                           ),
                          ),
-                       ),
-                     ],
-                     rows: <DataRow>[]
+                       ],
+                       rows: <DataRow>[]
+                     ),
                    ),
                  ),
                 ),
@@ -203,41 +230,50 @@ class _homeScreen extends State<homeScreen> {
                       children: <Widget>[
                         Column(
                           children: <Widget>[
-                            Text('Past Month'),
+                            Text('Monthly Income/Expense Ratio'),
                             SizedBox(height: 5.0,),
-                            PieChart(PieChartData(
-                                sections: _sections,
-                                centerSpaceRadius: 10.0,
-                                borderData: FlBorderData(show: false),
-                                sectionsSpace: 0,
+                            GestureDetector(
+                              onTap: (){},
+                              child: PieChart(PieChartData(
+                                  sections: _sections,
+                                  centerSpaceRadius: 10.0,
+                                  borderData: FlBorderData(show: false),
+                                  sectionsSpace: 0,
 
-                            ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(width: 10,),
-                        Column(
-                          children: <Widget>[
-                            Text('Present Month'),
-                            SizedBox(height: 5.0,),
-                            PieChart(PieChartData(
-                                sections: _sections,
-                                centerSpaceRadius: 10.0,
-                                borderData: FlBorderData(show: false),
-                                sectionsSpace: 0),
+                              ),
+                              ),
                             ),
                           ],
                         ),
                         SizedBox(width: 10,),
                         Column(
                           children: <Widget>[
-                            Text('Next Month'),
+                            Text('Present Task'),
                             SizedBox(height: 5.0,),
-                            PieChart(PieChartData(
-                                sections: _sections,
-                                centerSpaceRadius: 10.0,
-                                borderData: FlBorderData(show: false),
-                                sectionsSpace: 0),
+                            GestureDetector(
+                              onTap: (){},
+                              child: PieChart(PieChartData(
+                                  sections: _sections,
+                                  centerSpaceRadius: 10.0,
+                                  borderData: FlBorderData(show: false),
+                                  sectionsSpace: 0),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(width: 10,),
+                        Column(
+                          children: <Widget>[
+                            Text('Time Allocation'),
+                            SizedBox(height: 5.0,),
+                            GestureDetector(
+                              onTap: (){},
+                              child: PieChart(PieChartData(
+                                  sections: _sections,
+                                  centerSpaceRadius: 10.0,
+                                  borderData: FlBorderData(show: false),
+                                  sectionsSpace: 0),
+                              ),
                             ),
                           ],
                         ),
@@ -276,11 +312,14 @@ class _homeScreen extends State<homeScreen> {
                           children: <Widget>[
                             Text('Goals Past 5 years'),
                             SizedBox(height: 5.0,),
-                            PieChart(PieChartData(
-                                sections: _sections,
-                                centerSpaceRadius: 10.0,
-                                borderData: FlBorderData(show: false),
-                                sectionsSpace: 0),
+                            GestureDetector(
+                              onTap: (){},
+                              child: PieChart(PieChartData(
+                                  sections: _sections,
+                                  centerSpaceRadius: 10.0,
+                                  borderData: FlBorderData(show: false),
+                                  sectionsSpace: 0),
+                              ),
                             ),
                           ],
                         ),
@@ -289,11 +328,14 @@ class _homeScreen extends State<homeScreen> {
                           children: <Widget>[
                             Text('Present Present Year Goal'),
                             SizedBox(height: 5.0,),
-                            PieChart(PieChartData(
-                                sections: _sections,
-                                centerSpaceRadius: 10.0,
-                                borderData: FlBorderData(show: false),
-                                sectionsSpace: 0),
+                            GestureDetector(
+                              onTap: (){},
+                              child: PieChart(PieChartData(
+                                  sections: _sections,
+                                  centerSpaceRadius: 10.0,
+                                  borderData: FlBorderData(show: false),
+                                  sectionsSpace: 0),
+                              ),
                             ),
                           ],
                         ),
@@ -302,11 +344,14 @@ class _homeScreen extends State<homeScreen> {
                           children: <Widget>[
                             Text('Goal after 5 Years'),
                             SizedBox(height: 5.0,),
-                            PieChart(PieChartData(
-                                sections: _sections,
-                                centerSpaceRadius: 10.0,
-                                borderData: FlBorderData(show: false),
-                                sectionsSpace: 0),
+                            GestureDetector(
+                              onTap: (){},
+                              child: PieChart(PieChartData(
+                                  sections: _sections,
+                                  centerSpaceRadius: 10.0,
+                                  borderData: FlBorderData(show: false),
+                                  sectionsSpace: 0),
+                              ),
                             ),
                           ],
                         ),

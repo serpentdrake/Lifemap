@@ -199,9 +199,9 @@ class _surplusCashScreen extends State<surplusCashScreen> {
             ),
             Container(
               child: Center(
-                child: RaisedButton(
+                child: FloatingActionButton(
                   elevation: 5.0,
-                  child: Text("Add Entry"),
+                  child: Icon(Icons.add),
                   onPressed: _showDialog,
                 ),
               ),
@@ -241,9 +241,9 @@ class _surplusCashScreen extends State<surplusCashScreen> {
                 children: <Widget>[
                   Center(child: Text("Click the 'Add Entry'")),
                   Center(
-                    child: RaisedButton(
+                    child: FloatingActionButton(
                       elevation: 5.0,
-                      child: Text("Add Entry"),
+                      child: Icon(Icons.add),
                       onPressed: _showDialog,
                     ),
                   ),
