@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+// import 'package:google_fonts/google_fonts.dart';
 import 'package:lifemap_v7/constants.dart';
 import 'package:lifemap_v7/models/user.dart';
 import 'package:lifemap_v7/db/database_helper.dart';
 import 'package:lifemap_v7/screens/homescreen.dart';
-
+import 'dart:math' as math;
 
 class profileScreen extends StatefulWidget {
   @override
@@ -14,7 +15,8 @@ class profileScreen extends StatefulWidget {
 class _profileScreen extends State<profileScreen> {
   Future<List<User>> user;
 
-  String fName, lName, age, retirementAge;
+  String fName, lName, age, retirementAge, monthIn;
+  bool isEmployed, _isNotEmployed, _isEmployed;
 
   var dbHelper;
 
@@ -27,6 +29,7 @@ class _profileScreen extends State<profileScreen> {
   void initState() {
     super.initState();
     dbHelper = DBHelper();
+    isEmployed = false;
   }
 
   @override
@@ -46,14 +49,28 @@ class _profileScreen extends State<profileScreen> {
                 child: ListView(
                   children: [
                     SizedBox(
-                      height: 100.0,
+                      height: 20.0,
                     ),
-
                     //Text
                     Column(
                       children: [
-                        Text("This is the 1st part of CHUVAR"),
+                        Text(
+                          "We want to know you better",
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          padding: EdgeInsets.only(left: 18),
+                          child: Text(
+                            'Please fill in the following :',
+                          ),
+                        ),
                       ],
+                    ),
+                    SizedBox(
+                      height: 20,
                     ),
 
                     //Registration
@@ -87,12 +104,28 @@ class _profileScreen extends State<profileScreen> {
     );
   }
 
+  // Column(
+  // children: [
+  // RaisedButton(
+  // elevation: 5.0,
+  // child: Text(
+  // 'Next',
+  // style: TextStyle(
+  // fontWeight: FontWeight.bold,
+  // fontSize: 20,
+  // fontFamily: 'ArialMtBold'),
+  // ),
+  // onPressed: next,
+  // ),
+  // ],
+  // ),
+
   form() {
     return Form(
         key: formKey,
         child: Container(
-          height: 200,
-          padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
+          // height: 200,
+          // padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             verticalDirection: VerticalDirection.down,
@@ -104,7 +137,11 @@ class _profileScreen extends State<profileScreen> {
                     height: 47,
                     width: 180,
                     child: TextFormField(
-                      validator: (val) {return val.length == 0 ? "Field should not be empty":null;},
+                      validator: (val) {
+                        return val.length == 0
+                            ? "Field should not be empty"
+                            : null;
+                      },
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
                           labelText: 'First Name',
@@ -119,7 +156,11 @@ class _profileScreen extends State<profileScreen> {
                     height: 47,
                     width: 180,
                     child: TextFormField(
-                      validator: (val) {return val.length == 0 ? "Field should not be empty":null;},
+                      validator: (val) {
+                        return val.length == 0
+                            ? "Field should not be empty"
+                            : null;
+                      },
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
                           labelText: 'Last Name',
@@ -130,8 +171,6 @@ class _profileScreen extends State<profileScreen> {
                       onSaved: (val) => lName = val,
                     ),
                   ),
-
-
                 ],
               ),
               SizedBox(
@@ -141,7 +180,9 @@ class _profileScreen extends State<profileScreen> {
                 height: 47,
                 width: 370,
                 child: TextFormField(
-                  validator: (val) {return val.length == 0 ? "Field should not be empty":null;},
+                  validator: (val) {
+                    return val.length == 0 ? "Field should not be empty" : null;
+                  },
                   keyboardType: TextInputType.number,
                   // initialValue: '60',
                   decoration: InputDecoration(
@@ -158,7 +199,9 @@ class _profileScreen extends State<profileScreen> {
                 height: 47,
                 width: 370,
                 child: TextFormField(
-                  validator: (val) {return val.length == 0 ? "Field should not be empty":null;},
+                  validator: (val) {
+                    return val.length == 0 ? "Field should not be empty" : null;
+                  },
                   keyboardType: TextInputType.number,
                   initialValue: '60',
                   decoration: InputDecoration(
@@ -167,7 +210,67 @@ class _profileScreen extends State<profileScreen> {
                       contentPadding: EdgeInsets.all(8.0)),
                   onSaved: (val) => retirementAge = val,
                 ),
-              )
+              ),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Row(
+                  children: [
+                    Text(
+                      'Employed',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Checkbox(
+                        value: isEmployed,
+                      onChanged: (val) {
+                        if (isEmployed == false) {
+                          setState(() {
+                            isEmployed = true;
+                            print(isEmployed);
+                          });
+                        } else if (isEmployed == true) {
+                          setState(() {
+                            isEmployed = false;
+                            print(isEmployed);
+                          });
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(8),
+                child: Row(
+                  children: <Widget>[
+                    Text('Monthly Income'),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                      width: 120,
+                      child: TextFormField(
+                        validator: (val) {
+                          return val.length == 0 ? "Field should not be empty" : null;
+                        },
+                        inputFormatters: [
+                          DecimalTextInputFormatter(decimalRange: 2)
+                        ],
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(8),
+                          hintText: '0.00',
+                        ),
+                        onSaved: (val) => monthIn = val,
+                        // keyboardType: TextInputType.number,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ));
@@ -178,7 +281,7 @@ class _profileScreen extends State<profileScreen> {
       formKey.currentState.save();
 
       User e =
-          User(null, fName, lName, int.parse(age), int.parse(retirementAge));
+          User(null, fName, lName, int.parse(age), int.parse(retirementAge), double.parse(monthIn), isEmployed);
 
       dbHelper.saveUser(e);
       Navigator.pushReplacement(
@@ -214,5 +317,45 @@ class _UsNumberTextInputFormatter extends TextInputFormatter {
       text: newText.toString(),
       selection: new TextSelection.collapsed(offset: selectionIndex),
     );
+  }
+}
+
+class DecimalTextInputFormatter extends TextInputFormatter {
+  DecimalTextInputFormatter({this.decimalRange})
+      : assert(decimalRange == null || decimalRange > 0);
+
+  final int decimalRange;
+
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue, // unused.
+    TextEditingValue newValue,
+  ) {
+    TextSelection newSelection = newValue.selection;
+    String truncated = newValue.text;
+
+    if (decimalRange != null) {
+      String value = newValue.text;
+
+      if (value.contains(".") &&
+          value.substring(value.indexOf(".") + 1).length > decimalRange) {
+        truncated = oldValue.text;
+        newSelection = oldValue.selection;
+      } else if (value == ".") {
+        truncated = "0.";
+
+        newSelection = newValue.selection.copyWith(
+          baseOffset: math.min(truncated.length, truncated.length + 1),
+          extentOffset: math.min(truncated.length, truncated.length + 1),
+        );
+      }
+
+      return TextEditingValue(
+        text: truncated,
+        selection: newSelection,
+        composing: TextRange.empty,
+      );
+    }
+    return newValue;
   }
 }

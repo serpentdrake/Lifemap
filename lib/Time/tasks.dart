@@ -101,13 +101,16 @@ class _TaskScreenState extends State<TaskScreen> {
                 if(aindex == 0) {
                   tasks.insert(aindex, taskName.text);
                   aindex +=1;
+                  print(aindex);
                 } else if(aindex != 0){
                   tasks.insert(aindex, taskName.text);
                   aindex +=1;
+                  print(aindex);
                 }
                 isCompleted.add(false);
                 taskName.clear();
               });
+
               Navigator.pop(context);
             },),
         ],

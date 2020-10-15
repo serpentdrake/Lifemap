@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lifemap_v7/constants.dart';
 import 'package:lifemap_v7/screens/homescreen.dart';
-import 'package:lifemap_v7/constants.dart';
+
 import 'dart:math' as math;
 
 import 'package:lifemap_v7/screens/setUpScreens/surplusCashScreen.dart';

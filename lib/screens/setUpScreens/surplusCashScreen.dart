@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lifemap_v7/constants.dart';
-import 'package:lifemap_v7/screens/setUpScreens/assetsScreen.dart';
-import 'package:lifemap_v7/screens/setUpScreens/surplusCashScreen.dart';
+import 'assetsScreen.dart';
 import 'package:lifemap_v7/screens/homescreen.dart';
 import 'package:lifemap_v7/models/surplusCash.dart';
 import 'package:lifemap_v7/db/database_helper.dart';
@@ -200,9 +199,9 @@ class _surplusCashScreen extends State<surplusCashScreen> {
             ),
             Container(
               child: Center(
-                child: RaisedButton(
+                child: FloatingActionButton(
                   elevation: 5.0,
-                  child: Text("Add Entry"),
+                  child: Icon(Icons.add),
                   onPressed: _showDialog,
                 ),
               ),
@@ -242,9 +241,9 @@ class _surplusCashScreen extends State<surplusCashScreen> {
                 children: <Widget>[
                   Center(child: Text("Click the 'Add Entry'")),
                   Center(
-                    child: RaisedButton(
+                    child: FloatingActionButton(
                       elevation: 5.0,
-                      child: Text("Add Entry"),
+                      child: Icon(Icons.add),
                       onPressed: _showDialog,
                     ),
                   ),
@@ -258,6 +257,8 @@ class _surplusCashScreen extends State<surplusCashScreen> {
       ),
     );
   }
+
+
 
   _save() {
     if (formKey.currentState.validate()) {

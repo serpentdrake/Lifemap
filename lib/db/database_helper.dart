@@ -8,6 +8,7 @@ import 'package:lifemap_v7/models/surplusCash.dart';
 import 'package:lifemap_v7/models/strength.dart';
 import 'package:lifemap_v7/models/weakness.dart';
 import 'package:lifemap_v7/models/asset.dart';
+import 'package:lifemap_v7/models/employment.dart';
 
 class DBHelper {
   static Database _db;
@@ -17,6 +18,8 @@ class DBHelper {
   static const String LNAME = 'lName';
   static const String AGE = 'age';
   static const String RETIREAGE = 'retireAge';
+  static const String MONTHIN = 'monthIn';
+  static const String ISEMPLOYED = 'isEmployed';
   static const String USERTABLE = 'User';
 
   //Time
@@ -27,7 +30,6 @@ class DBHelper {
 
   //Strength
   static const String STRID = 'strId';
-  static const String CORESTR = 'coreStr';
   static const String STRDESC = 'strDesc';
   static const String STRTABLE = 'Strength';
 
@@ -47,6 +49,10 @@ class DBHelper {
   static const String ASSETDESC = 'assetDesc';
   static const String ASSETVAL = 'assetVal';
   static const String ASSETTABLE = 'Asset';
+
+  //Employment
+  static const String EMPID = 'empId';
+  static const String EMPTABLE = 'Employment';
 
   //database
   static const String DB_NAME = 'lifemap.db';
@@ -74,12 +80,13 @@ class DBHelper {
          $FNAME TEXT,
          $LNAME TEXT,
          $AGE INTEGER,
-         $RETIREAGE INTEGER
+         $RETIREAGE INTEGER,
+         $MONTHIN DOUBLE,
+         $ISEMPLOYED BOOLEAN
         )""");
     await db.execute("""
          CREATE TABLE $STRTABLE(
           $STRID INTEGER PRIMARY KEY,
-         
           $STRDESC TEXT,
           $USERID INTEGER,
           FOREIGN KEY ($USERID)
@@ -119,6 +126,15 @@ class DBHelper {
               ON UPDATE NO ACTION
               ON UPDATE NO ACTION
         )""");
+    await db.execute("""
+        CREATE TABLE $EMPTABLE(
+          $EMPID INTEGER PRIMARY KEY,
+          $USERID INTEGER,
+          FOREIGN KEY ($USERID)
+            REFERENCES $USERTABLE($USERID)
+              ON UPDATE NO ACTION
+              ON UPDATE NO ACTION
+        )""");
   }
 
   static Future _onConfigure(Database db) async {
@@ -135,7 +151,7 @@ class DBHelper {
   Future<List<User>> getUser() async {
     var dbClient = await db;
     List<Map> maps = await dbClient
-        .query(USERTABLE, columns: [USERID, FNAME, LNAME, AGE, RETIREAGE]);
+        .query(USERTABLE, columns: [USERID, FNAME, LNAME, AGE, RETIREAGE, MONTHIN, ISEMPLOYED]);
 //    List<Map> maps = await dbClient.rawQuery("SELECT * FROM $USERTABLE");
     List<User> user = [];
     if (maps.length > 0) {
@@ -168,7 +184,7 @@ class DBHelper {
   Future<List<Strength>> getStr() async {
     var dbClient = await db;
     List<Map> maps = await dbClient.query(STRTABLE,
-        columns: [STRID, CORESTR, STRDESC, USERID]);
+        columns: [STRID, STRDESC, USERID]);
     List<Strength> str = [];
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
@@ -261,6 +277,12 @@ class DBHelper {
         where: '$CASHID = ?', whereArgs: [cash.cashId]);
   }
 
+  Future<int> deleteCash(int cashId) async {
+    var dbClient = await db;
+    return await dbClient
+        .delete(CASHTABLE, where: '$CASHID = ?', whereArgs: [cashId]);
+  }
+
   //AssetCash
   Future<Asset> saveAsset(Asset asset) async {
     var dbClient = await db;
@@ -279,6 +301,50 @@ class DBHelper {
       }
     }
     return asset;
+  }
+  Future<int> updateAsset(Asset asset) async {
+    var dbClient = await db;
+    return await dbClient.update(ASSETTABLE, asset.toMap(),
+        where: '$ASSETID = ?', whereArgs: [asset.assetId]);
+  }
+
+  Future<int> deleteAsset(int assetId) async {
+    var dbClient = await db;
+    return await dbClient
+        .delete(ASSETTABLE, where: '$ASSETID = ?', whereArgs: [assetId]);
+  }
+
+  //Employment
+  Future<Employment> saveEmp(Employment emp) async {
+    var dbClient = await db;
+    emp.empId = await dbClient.insert(USERTABLE, emp.toMap());
+    return emp;
+  }
+
+  Future<List<Employment>> getEmp() async {
+    var dbClient = await db;
+    List<Map> maps = await dbClient
+        .query(EMPTABLE, columns: [EMPID, USERID]);
+//    List<Map> maps = await dbClient.rawQuery("SELECT * FROM $USERTABLE");
+    List<Employment> emp = [];
+    if (maps.length > 0) {
+      for (int i = 0; i < maps.length; i++) {
+        emp.add(Employment.fromMap(maps[i]));
+      }
+    }
+    return emp;
+  }
+
+  Future<int> deleteEmp(int empId) async {
+    var dbClient = await db;
+    return await dbClient
+        .delete(EMPTABLE, where: '$EMPID = ?', whereArgs: [empId]);
+  }
+
+  Future<int> updateEmp(Employment emp) async {
+    var dbClient = await db;
+    return await dbClient.update(EMPTABLE, emp.toMap(),
+        where: '$EMPID = ?', whereArgs: [emp.empId]);
   }
 
 

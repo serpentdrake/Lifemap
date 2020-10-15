@@ -1,9 +1,11 @@
 class User{
   int userId, age, retireAge;
-  String fName, lName, birthDate;
+  String fName, lName;
+  double monthIn;
+  bool isEmployed;
 
 
-  User(this.userId, this.fName, this.lName, this.age, this.retireAge);
+  User(this.userId, this.fName, this.lName, this.age, this.retireAge, this.monthIn, this.isEmployed);
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic> {
@@ -11,7 +13,9 @@ class User{
       'fName': fName,
       'lName': lName,
       'age': age,
-      'retireAge': retireAge
+      'retireAge': retireAge,
+      'monthIn': monthIn,
+      'isEmployed': isEmployed
     };
     return map;
   }
@@ -22,6 +26,8 @@ class User{
     lName = map['lName'];
     age = map['age'];
     retireAge = map['retireAge'];
+    monthIn = map['monthIn'];
+    isEmployed = map['isEmployed'];
   }
 
 }
