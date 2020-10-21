@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:io' as io;
+import 'package:lifemap_v7/models/taskMod.dart';
+import 'package:lifemap_v7/models/timeAllot.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
@@ -135,7 +137,26 @@ class DBHelper {
               ON UPDATE NO ACTION
               ON UPDATE NO ACTION
         )""");
+
+    //task
+    await db.execute("""
+    CREATE TABLE tasks(
+    id INTEGER PRIMARY KEY,
+    title TEXT 
+    )""");
+
+
+    await db.execute("""
+    CREATE TABLE timeAlloc(
+    id INTEGER PRIMARY KEY,
+    work DOUBLE,
+    advoc DOUBLE,
+    rest DOUBLE 
+    )""");
   }
+
+
+
 
   static Future _onConfigure(Database db) async {
     await db.execute('PRAGMA foreign_keys = ON');
@@ -345,6 +366,33 @@ class DBHelper {
     var dbClient = await db;
     return await dbClient.update(EMPTABLE, emp.toMap(),
         where: '$EMPID = ?', whereArgs: [emp.empId]);
+  }
+
+  Future<void> insertTask(Tasker tasker) async {
+    var dbClient = await db;
+    await dbClient.insert('tasks', tasker.toMap());
+  }
+
+  Future<List<Tasker>> getTasks() async{
+    var dbClient = await db;
+    List<Map<String, dynamic>> taskMap = await dbClient.query('tasks');
+    return List.generate(taskMap.length, (index){
+      return Tasker(id: taskMap[index]['id'], title: taskMap[index]['title']);
+    });
+  }
+
+  Future<void> insertTimeAllot(WeekSched sched) async {
+    var dbClient = await db;
+    await dbClient.insert('timeAlloc', sched.toMap() );
+  }
+
+  Future<List<WeekSched>> getTimeAllot() async {
+    var dbClient = await db;
+    List<Map<String,dynamic>> timeAllotMap = await dbClient.query('timeAlloc');
+    return List.generate(timeAllotMap.length, (index) {
+    return WeekSched(id: timeAllotMap[index]['id'], work: timeAllotMap[index]['work'], advoc: timeAllotMap[index]['advoc'], rest: timeAllotMap[index]['rest']);
+    });
+
   }
 
 

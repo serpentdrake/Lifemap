@@ -5,7 +5,7 @@ import 'package:lifemap_v7/constants.dart';
 import 'dart:math' as math;
 import 'package:lifemap_v7/models/surplusCash.dart';
 import 'package:lifemap_v7/db/database_helper.dart';
-import 'file:///C:/Users/Kristian/Desktop/Flutter/lifemap_v7/lib/Treasure/passiveIncome.dart';
+import 'package:lifemap_v7/Treasure/passiveIncome.dart';
 
 
 class activeIncome extends StatefulWidget {

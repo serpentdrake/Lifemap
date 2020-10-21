@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lifemap_v7/constants.dart';
 import 'package:lifemap_v7/db/database_helper.dart';
-import 'package:lifemap_v7/models/weakness.dart';
+import 'package:lifemap_v7/models/strength.dart';
 
-class talentScreenWeak extends StatefulWidget {
+class talentScreen1 extends StatefulWidget {
   @override
-  _talentScreenWeakState createState() => _talentScreenWeakState();
+  _talentScreenState createState() => _talentScreenState();
 }
 
-class _talentScreenWeakState extends State<talentScreenWeak> {
-  Future<List<Weakness>> weak;
+class _talentScreenState extends State<talentScreen1> {
+  Future<List<Strength>> str;
 
-  int userId, ctr = 0, updateWeakId;
-  String weakDesc, title;
+  int userId, ctr = 0;
+  String strDesc, title;
 
-  bool _setActive, isUpdate = false, isCoreWeak;
+  bool _setActive, isUpdate, isCoreStr;
 
   final formKey = new GlobalKey<FormState>();
-  TextEditingController _controllerWeak = TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    title = "Core Weakness";
+    title = "Core Strength";
     // isCoreStr = true;
     print(ctr);
   }
@@ -40,7 +40,6 @@ class _talentScreenWeakState extends State<talentScreenWeak> {
           Scaffold(
             backgroundColor: Colors.transparent,
             appBar: AppBar(
-              title: Text('WEAKNESS'),
               elevation: 0.0,
               backgroundColor: Colors.transparent.withOpacity(0.2),
             ),
@@ -51,17 +50,20 @@ class _talentScreenWeakState extends State<talentScreenWeak> {
                   Center(child: Column(
                     children: <Widget>[
                       Text("Talent",
-                        style: TextStyle(
+                        style: GoogleFonts.getFont('Alice', textStyle:TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
                         ),
+                        ),
                       ),
                       SizedBox(height: 15,),
-                      Text('"Weakness"',
-                        style: TextStyle(
+                      Text('"Strength"',
+                        style: GoogleFonts.getFont('Alice', textStyle:TextStyle(
                           fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                        ),),
+                          fontWeight: FontWeight.bold,
+                        ),
+                        ),
+                      ),
                     ],
                   ),),
                   SizedBox(height: 30.0,),
@@ -80,7 +82,7 @@ class _talentScreenWeakState extends State<talentScreenWeak> {
 
   _refreshList() {
     setState(() {
-      weak = DBHelper().getWeak();
+      str = DBHelper().getStr();
     });
   }
 
@@ -99,29 +101,16 @@ class _talentScreenWeakState extends State<talentScreenWeak> {
   }
 
   _save() {
-    if (isUpdate) {
-      if(formKey.currentState.validate()){
-        formKey.currentState.save();
-        Weakness e = Weakness(updateWeakId, weakDesc, userId);
+    if(formKey.currentState.validate()){
+      formKey.currentState.save();
+      Strength e = Strength(null, strDesc, userId);
 
-        DBHelper().updateWeak(e);
-      }
-      setState(() {
-        isUpdate = false;
-      });
-
-    } else {
-      if(formKey.currentState.validate()){
-        formKey.currentState.save();
-        Weakness e = Weakness(null, weakDesc, userId);
-
-        DBHelper().saveWeak(e);
-      }
-      setState(() {
-        title = "Weakness";
-      });
-      ctr++;
+      DBHelper().saveStr(e);
     }
+    setState(() {
+      title = "Strength";
+    });
+    ctr++;
     print(ctr);
     _refreshList();
     Navigator.pop(context);
@@ -131,37 +120,44 @@ class _talentScreenWeakState extends State<talentScreenWeak> {
     Navigator.push(context, MaterialPageRoute(builder: (context) => null));
   }
 
-  Container dataList(List<Weakness> weak) {
+  Container dataList(List<Strength> str) {
     return Container(
       child: DataTable(
         dividerThickness: 0,
         columns: [
           DataColumn(
-            label: Text("Weakness",
-              style: TextStyle(
+            label: Text("Strength",
+              style: GoogleFonts.getFont('Alice', textStyle:TextStyle(
                 fontSize: 15,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.bold,
+              ),
               ),
               textAlign: TextAlign.center,
             ),
           )
         ],
-        rows: weak
-            .map((weak) => DataRow(cells: [
-          DataCell(
-            // Text(str.strDesc)
-              ListTile(
-                title: Text(weak.weakDesc),
-                trailing: IconButton(icon: Icon(Icons.edit), onPressed: (){
-                  _editDialog();
-                  setState(() {
-                    isUpdate = true;
-                    updateWeakId = weak.weakId;
-                  });
-                  _controllerWeak.text = weak.weakDesc;
-                }),
+        rows: str
+          .map((str) => DataRow(cells: [
+            DataCell(
+             // Text(str.strDesc)
+              Container(
+                // decoration: BoxDecoration(
+                //   color: Colors.white,
+                //   boxShadow: [
+                //     BoxShadow(
+                //       color: Colors.grey.withOpacity(0.5),
+                //       spreadRadius: 5,
+                //       blurRadius: 7,
+                //       offset: Offset(0, 3), // changes position of shadow
+                //     ),
+                //   ]
+                // ),
+                child: ListTile(
+                  title: Text(str.strDesc),
+                  trailing: IconButton( highlightColor: Colors.transparent, splashColor: Colors.transparent ,icon: Icon(Icons.more_vert), onPressed: (){}),
+                ),
               )
-          )
+            )
         ])).toList(),
       ),
     );
@@ -169,7 +165,7 @@ class _talentScreenWeakState extends State<talentScreenWeak> {
 
   _loader() {
     return FutureBuilder(
-      future: weak,
+      future: str,
       builder: (context, snapshot){
         if(snapshot.hasData) {
           return dataList(snapshot.data);
@@ -179,8 +175,28 @@ class _talentScreenWeakState extends State<talentScreenWeak> {
             child: Container(
               child: Column(
                 children: <Widget>[
-                  Text("Determine  your 5 Main Weakness"),
-                  Text("Where the 1st one will be your Core Weakness"),
+                  Text('Talent Management is the key'
+              'ingredient in goal setting as it can'
+              'determine the success or failure of your'
+              'future plan' ,
+                    style: GoogleFonts.getFont('Alice', textStyle:TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                    ),
+                      letterSpacing: 0.5,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 10,),
+                  Text('Let\'s start by  determining your Strengths where the first one you enter is your core Strength',
+                    style: GoogleFonts.getFont('Alice', textStyle:TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                    ),
+                      letterSpacing: 0.5
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                 ],
               ),
             ),
@@ -209,58 +225,15 @@ class _talentScreenWeakState extends State<talentScreenWeak> {
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
                         labelText: 'Description',
-                        hintText: 'ex. Introvert',
-                        hintStyle: kHintTextStyle,
-                        // border: InputBorder.none,
-                        // contentPadding: EdgeInsets.all(8.0)
-                      ),
-                      onSaved: (val) => weakDesc = val,
-                    ),
-
-
-                  ],
-                ),
-              ),
-            ),
-            actions: <Widget>[
-              FlatButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text('Cancel')),
-              FlatButton(
-                onPressed: _save,
-                child: Text("Save"),
-              ),
-            ]));
-  }
-
-  _editDialog() {
-    showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          // title: Text("Step 3.2"),
-          // shape: RoundedRectangleBorder(),
-            content: Form(
-              key: formKey,
-              child: Container(
-                height: 140,
-                child: Column(
-                  children: <Widget>[
-                    Text("Update your Weakness"),
-                    // SizedBox(height: 5.0,),
-                    TextFormField(
-                      keyboardType: TextInputType.text,
-                      controller: _controllerWeak,
-                      decoration: InputDecoration(
-                        labelText: 'Description',
                         hintText: 'ex. Sociable',
                         hintStyle: kHintTextStyle,
                         // border: InputBorder.none,
                         // contentPadding: EdgeInsets.all(8.0)
                       ),
-                      onSaved: (val) => weakDesc = val,
+                      onSaved: (val) => strDesc = val,
                     ),
+
+
                   ],
                 ),
               ),

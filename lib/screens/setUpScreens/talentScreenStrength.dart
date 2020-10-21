@@ -5,17 +5,21 @@ import 'package:lifemap_v7/models/strength.dart';
 import 'package:lifemap_v7/screens/setUpScreens/talentScreenWeak.dart';
 
 class talentScreen extends StatefulWidget {
+  bool isTrue;
+  talentScreen({this.isTrue});
   @override
-  _talentScreenState createState() => _talentScreenState();
+  _talentScreenState createState() => _talentScreenState(isTrue);
 }
 
 class _talentScreenState extends State<talentScreen> {
   Future<List<Strength>> str;
 
+  _talentScreenState(this.isTrue);
+
   int userId, ctr = 0, updateStrId;
   String strDesc, title;
 
-  bool _setActive, isUpdate = false, isCoreStr;
+  bool isTrue = false, isUpdate = false, isCoreStr;
 
   final formKey = new GlobalKey<FormState>();
   TextEditingController _controllerStr = TextEditingController();
@@ -25,6 +29,11 @@ class _talentScreenState extends State<talentScreen> {
     super.initState();
     title = "Core Strength";
     // isCoreStr = true;
+    if(isTrue){
+      setState(() {
+        str = DBHelper().getStr();
+      });
+    }
     print(ctr);
   }
 
@@ -41,6 +50,7 @@ class _talentScreenState extends State<talentScreen> {
           Scaffold(
             backgroundColor: Colors.transparent,
             appBar: AppBar(
+              title: Text('STRENGTH'),
               elevation: 0.0,
               backgroundColor: Colors.transparent.withOpacity(0.2),
             ),

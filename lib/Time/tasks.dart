@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:lifemap_v7/db/database_helper.dart';
+import 'package:lifemap_v7/models/taskMod.dart';
 
 class TaskScreen extends StatefulWidget {
+
+
+
   @override
   _TaskScreenState createState() => _TaskScreenState();
 }
 
 class _TaskScreenState extends State<TaskScreen> {
+
   List<String> tasks;
   List<bool> isCompleted;
   int completedTask = 0;
   int aindex = 0;
   TextEditingController taskName = TextEditingController();
+
   @override
   void initState() {
-    // TODO: implement initState
+
+
     super.initState();
 
     tasks = [];
@@ -24,13 +32,9 @@ class _TaskScreenState extends State<TaskScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: <Widget>[
-          BackButton(
-            onPressed: (){
-              Navigator.pop(context, [tasks.length,completedTask]);
-            },
-          )
-        ],
+        title: Text('TO-DO'),
+        backgroundColor: Colors.transparent.withOpacity(0.2),
+        elevation: 0,
       ),
       body: Container(
         child: ListView.builder(
@@ -92,6 +96,16 @@ class _TaskScreenState extends State<TaskScreen> {
         builder: (context) => AlertDialog(
             content: TextField(
               controller: taskName,
+              onSubmitted: (value) async {
+
+                if(value !=""){
+                  DBHelper _dbhelper = DBHelper();
+                  Tasker _newTask = Tasker(
+                  title: value
+                  );
+                 await _dbhelper.insertTask(_newTask);
+                }
+              },
             ),
         actions: <Widget>[
           FlatButton(

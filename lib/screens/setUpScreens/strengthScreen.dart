@@ -5,7 +5,7 @@ import 'package:lifemap_v7/db/database_helper.dart';
 import 'package:lifemap_v7/models/strength.dart';
 import 'dart:math' as math;
 
-import 'weaknessScreen.dart';
+import 'file:///C:/Users/serpe/Desktop/lifemap_v7/lib/screens/setUpScreens/weaknessScreen.dart';
 
 class strengthScreen extends StatefulWidget {
   @override

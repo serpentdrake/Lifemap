@@ -5,7 +5,7 @@ import 'package:lifemap_v7/db/database_helper.dart';
 import 'package:lifemap_v7/models/weakness.dart';
 import 'dart:math' as math;
 
-import 'surplusCashScreen.dart';
+import 'file:///C:/Users/serpe/Desktop/lifemap_v7/lib/screens/setUpScreens/surplusCashScreen.dart';
 import 'package:lifemap_v7/screens/setUpScreens/monthlyExpensesScreen.dart';
 
 class weaknessScreen extends StatefulWidget {
@@ -40,6 +40,9 @@ class _weaknessScreen extends State<weaknessScreen> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+      appBar: AppBar(
+
+      ),
       body: Stack(
         children: <Widget>[
           Container(
