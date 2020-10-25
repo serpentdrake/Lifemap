@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lifemap_betav1/models/user.dart';
-import 'package:lifemap_betav1/pages/homeScreen/homePage.dart';
 import 'package:lifemap_betav1/providers/db_provider.dart';
+import 'package:lifemap_betav1/pages/homeScreen/homePage.dart';
 import 'dart:math' as math;
 
 class createUser extends StatefulWidget {

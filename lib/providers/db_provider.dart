@@ -35,7 +35,20 @@ class DBProvider{
               'retireAge INTEGER,'
               'monthIn DOUBLE'
               ')');
-        });
+          await db.execute('CREATE TABLE Treasure('
+              'treasureId INTEGER PRIMARY KEY,'
+              'trd DOUBLE,'
+              'id INTEGER'
+              'FOREIGN KEY (id)'
+                'REFERENCES User(id)'
+                  'ON UPDATE NO ACTION'
+                  'ON DELETE NO ACTION'
+              ')');
+        },
+        onConfigure: (Database db) async {
+          await db.execute('PRAGMA foreign_keys = ON');
+        }
+        );
   }
 
   // Insert employee on database
@@ -63,6 +76,8 @@ class DBProvider{
 
     return list;
   }
+
+
 
 //   Future<int> queryVegetarianCount() async {
 //     var vegList = await queryVegetarian();

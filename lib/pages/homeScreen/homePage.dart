@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lifemap_betav1/pages/setUpScreens/createUser.dart';
 import 'package:lifemap_betav1/providers/db_provider.dart';
-import 'package:lifemap_betav1/screens/userInfoScreen.dart';
+import 'package:lifemap_betav1/pages/screens/userInfoScreen.dart';
 
 class homePage extends StatefulWidget {
   @override
@@ -10,6 +10,16 @@ class homePage extends StatefulWidget {
 
 class _homePageState extends State<homePage> {
   var isLoading = false;
+  var help;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    help = userInfoSummary();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,7 +56,7 @@ class _homePageState extends State<homePage> {
                     ],
                   ),
                 ),
-                Container(height: 200.0,child: userInfoSummary())
+                Container(child: userInfoSummary(),),
               ],
             ),
           ),
@@ -54,6 +64,8 @@ class _homePageState extends State<homePage> {
       ),
     );
   }
+
+
 
   _loadFromApi() async {
     setState(() {
